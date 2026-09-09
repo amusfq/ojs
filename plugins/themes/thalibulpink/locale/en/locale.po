@@ -1,0 +1,5 @@
+msgid "plugins.themes.thalibulpink.name"
+msgstr "Thalibul Pink"
+
+msgid "plugins.themes.thalibulpink.description"
+msgstr "A modern editorial theme for scholarly journals."
