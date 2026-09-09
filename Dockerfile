@@ -13,7 +13,6 @@ COPY docker/entrypoint.sh /usr/local/bin/ojs-entrypoint
 COPY Caddyfile /etc/frankenphp/Caddyfile
 
 RUN composer install --working-dir=lib/pkp --no-dev --prefer-dist --no-interaction --no-progress \
-    && sed -i "/'text' => .*getNotificationContents/a\\                'read' => (bool) \$notification->dateRead," lib/pkp/classes/notification/PKPNotificationOperationManager.php \
     && mkdir -p files cache/t_compile cache/_db \
     && chmod +x /usr/local/bin/ojs-entrypoint \
     && chown -R www-data:www-data files cache
