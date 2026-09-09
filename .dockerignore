@@ -5,4 +5,5 @@ files
 node_modules
 plugins/themes/thalibulpink
 config.inc.php
+config-data
 docker-compose*.yml

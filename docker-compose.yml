@@ -1,33 +1,18 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    env_file:
+      - .env
+    image: ${IMAGE_NAME:-ghcr.io/amusfq/ojs}:${IMAGE_TAG:-latest}
     ports:
-      - "8080:80"
-    volumes:
-      - ojs_files:/var/www/html/files
-      - ojs_config:/var/www/html/config-data
-    depends_on:
-      db:
-        condition: service_healthy
-
-  db:
-    image: mariadb:11.4
+      - "${APP_PORT:-8080}:80"
     environment:
-      MARIADB_DATABASE: ojs
-      MARIADB_USER: ojs
-      MARIADB_PASSWORD: change-me
-      MARIADB_ROOT_PASSWORD: change-me-root
+      OJS_BASE_URL: ${OJS_BASE_URL:-http://localhost:8080}
+      OJS_INSTALLED: ${OJS_INSTALLED:-Off}
+      DB_DRIVER: ${DB_DRIVER:-mysqli}
+      DB_HOST: ${DB_HOST:-your-external-db-host}
+      DB_USERNAME: ${DB_USERNAME:-ojs}
+      DB_PASSWORD: ${DB_PASSWORD:-change-me}
+      DB_DATABASE: ${DB_DATABASE:-ojs}
     volumes:
-      - ojs_db:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-
-volumes:
-  ojs_db:
-  ojs_files:
-  ojs_config:
+      - ./files:/var/www/html/files
+      - ./config-data:/var/www/html/config-data

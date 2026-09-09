@@ -38,8 +38,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=latest,enable=${{ github.ref_name == 'main' }}
-            type=raw,value=latest-staging,enable=${{ github.ref_name == 'amusfq_dev' }}
+            type=raw,value=latest
             type=sha,format=long
 
       - name: Build and push image
@@ -50,3 +49,10 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Deploy to Dokploy
+        # Configure runtime variables and GHCR credentials in Dokploy.
+        # This webhook runs only after the image push succeeds.
+        env:
+          DOKPLOY_WEBHOOK_URL: ${{ secrets.DOKPLOY_WEBHOOK_URL }}
+        run: curl --fail-with-body --silent --show-error --retry 3 --retry-all-errors --request POST "$DOKPLOY_WEBHOOK_URL"

@@ -61,13 +61,13 @@ Linux, or one of the following: BSD, Solaris, Mac OS X, Windows
 
 ## Docker
 
-Start OJS and MariaDB locally with:
+Start the OJS container with an external database with:
 
 ```bash
-docker compose -f docker-compose.yml up --build
+docker compose -f docker-compose.yml up -d
 ```
 
-Open `http://localhost:8080` and complete the OJS installer. Database, files, and generated configuration are stored in Docker volumes. Set `OJS_BASE_URL`, `DB_*`, and `OJS_INSTALLED=On` in the app service when deploying an existing installation.
+Open `http://localhost:8080` and complete the OJS installer. Uploaded files and generated configuration are stored in `./files` and `./config-data`; the database is external. Set `OJS_BASE_URL`, `DB_*`, and `OJS_INSTALLED=On` in `.env` when deploying an existing installation.
 
 ## Bugs / Feature Requests
 
