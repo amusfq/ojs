@@ -1,0 +1,33 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ojs_files:/var/www/html/files
+      - ojs_config:/var/www/html/config-data
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: ojs
+      MARIADB_USER: ojs
+      MARIADB_PASSWORD: change-me
+      MARIADB_ROOT_PASSWORD: change-me-root
+    volumes:
+      - ojs_db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ojs_db:
+  ojs_files:
+  ojs_config:

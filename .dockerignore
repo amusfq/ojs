@@ -1,0 +1,8 @@
+.git
+.github
+cache
+files
+node_modules
+plugins/themes/thalibulpink
+config.inc.php
+docker-compose*.yml
