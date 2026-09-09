@@ -59,6 +59,16 @@ MySQL 5.7.22+, MariaDB 4.1+ or PostgreSQL 9.5+
 
 Linux, or one of the following: BSD, Solaris, Mac OS X, Windows
 
+## Docker
+
+Start OJS and MariaDB locally with:
+
+```bash
+docker compose -f docker-compose.yml up --build
+```
+
+Open `http://localhost:8080` and complete the OJS installer. Database, files, and generated configuration are stored in Docker volumes. Set `OJS_BASE_URL`, `DB_*`, and `OJS_INSTALLED=On` in the app service when deploying an existing installation.
+
 ## Bugs / Feature Requests
 
 > ⚠️ If you have found a security risk or vulnerability, please read our [security policy](SECURITY.md).
