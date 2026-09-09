@@ -1,6 +1,7 @@
 /config.inc.php
 .env
 config-data/
+/lib/pkp/lib/vendor/
 ./build
 temp
 /files
